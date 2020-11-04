@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="ui attached message" style="margin-top: 50px">
+        <div class="header">
+            Welcome to Opinions!
+        </div>
+        <p>Fill out the form below to sign-up for a new account</p>
+    </div>
+    <form action="" method="post" class="ui large attached fluid segment form" novalidate>
+        {{ form.csrf_token }}
+
+        <!-- Email field and validation -->
+        {% if form.email.errors %}
+            <div class="error field required">
+                {{ form.email.label }}
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.email.label }}
+                {{ form.email }}
+            </div>
+        {% endif %}
+
+        <!-- Fullname field and validation -->
+        {% if form.full_name.errors %}
+            <div class="error field required">
+                {{ form.full_name.label }}
+                {{ form.full_name }}
+                {% for error in form.full_name.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.full_name.label }}
+                {{ form.full_name }}
+            </div>
+        {% endif %}
+
+        <!-- Username field and validation -->
+        {% if form.username.errors %}
+            <div class="error field required">
+                {{ form.username.label }}
+                {{ form.username }}
+                <small>{{ form.username.description }}</small>
+                {% for error in form.username.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.username.label }}
+                {{ form.username }}
+                <small>{{ form.username.description }}</small>
+            </div>
+        {% endif %}
+
+        <!-- Password field and validation -->
+        {% if form.password.errors %}
+            <div class="error field required">
+                {{ form.password.label }}
+                {{ form.password }}
+                <small>{{ form.password.description }}</small>
+                {% for error in form.password.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.password.label }}
+                {{ form.password }}
+                <small>{{ form.password.description }}</small>
+            </div>
+        {% endif %}
+        <button class="ui fluid green inverted button">Register</button>
+    </form>
+    <div class="ui bottom attached warning message">
+        <i class="icon help"></i>
+        Already signed up? <a href="{{ url_for('users.login') }}">Login here</a> instead.
+    </div>
+
+{% endblock body %}

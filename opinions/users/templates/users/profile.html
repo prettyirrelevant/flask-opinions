@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% if not user.confirmed and current_user.username == user.username %}
+        <div class="ui blue message floating">
+            <i class="close icon"></i>
+            <p class="header">Your account is not yet verified which can lead to loss of account. Click <a href="{{ url_for('users.resend_token') }}"> here </a> to send a confirmation link</p>
+        </div>
+    {% endif %}
+    <div class="ui raised segment">
+        <div class="ui stackable center aligned grid">
+            <div class="eight wide column">
+                <img src="{{ url_for('serve_profile', filename=user.profile_picture) }}" alt="Profile picture" class="ui image large circular">
+            </div>
+            <div class="eight wide middle aligned column">
+                <h1 class="ui header">{{ user.full_name }}</h1>
+                <h2 class="ui header">{{ user.email }}</h2>
+                <h3 class="ui header">@{{ user.username }}</h3>
+                <!-- <em class="ui header">Being a member since {{ user.registered_on.strftime("%d-%m-%Y") }}</em> -->
+                <div class="ui two statistics">
+                    <div class="statistic">
+                        <div class="value">
+                            {{ user.followers.count() }}
+                        </div>
+                        <div class="label">
+                            Followers
+                        </div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">
+                            {{ user.followed.count() }}
+                        </div>
+                        <div class="label">
+                            Following
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    {% if not current_user.username == user.username %}
+                        {% if not current_user.is_following(user) %}
+                        <p>
+                            <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.submit(value='Follow', class='ui fluid primary button') }}
+                            </form>
+                        </p>
+                        {% else %}
+                        <p>
+                            <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.submit(value='Unfollow', class='ui fluid button') }}
+                            </form>
+                        </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if current_user.username == user.username %}
+        <div class="ui three column stackable grid">
+            <div class="column">
+                <a href="{{ url_for('users.edit_profile') }}" class="ui fluid big yellow button">Edit Profile</a>
+            </div>
+            <div class="column">
+                <a href="{{ url_for('blog.create_post') }}" class="ui fluid big primary button">New Opinion</a>
+            </div>
+            <div class="column">
+                <a href="{{ url_for('users.logout') }}" class="ui fluid big red button">Logout</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock body %}

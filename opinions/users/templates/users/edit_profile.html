@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="ui attached message" style="margin-top: 50px">
+        <div class="header">
+           Edit Profile Page
+        </div>
+    </div>
+    <form action="" method="post" class="ui large attached fluid segment form" novalidate enctype="multipart/form-data">
+        {{ form.csrf_token }}
+
+        <!-- Username field and validation -->
+        {% if form.username.errors %}
+            <div class="disabled error field">
+                {{ form.username.label }}
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="disabled field">
+                {{ form.username.label }}
+                {{ form.username }}
+            </div>
+        {% endif %}
+
+        <!-- Email field and validation -->
+        {% if form.email.errors %}
+            <div class="error field required">
+                {{ form.email.label }}
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.email.label }}
+                {{ form.email }}
+            </div>
+        {% endif %}
+
+        <!-- Fullname field and validation -->
+        {% if form.full_name.errors %}
+            <div class="error field required">
+                {{ form.full_name.label }}
+                {{ form.full_name }}
+                {% for error in form.full_name.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.full_name.label }}
+                {{ form.full_name }}
+            </div>
+        {% endif %}
+
+        <!-- Profile field and validation -->
+        {% if form.profile_picture.errors %}
+            <div class="error field">
+                {{ form.profile_picture.label }}
+                {{ form.profile_picture }}
+                {% for error in form.profile_picture.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field">
+                {{ form.profile_picture.label }}
+                {{ form.profile_picture }}
+            </div>
+        {% endif %}
+
+
+        <button class="ui fluid green inverted button">Update Profile</button>
+    </form>
+
+{% endblock %}

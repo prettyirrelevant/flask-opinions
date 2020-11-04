@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="ui attached message" style="margin-top: 90px">
+        <div class="header">
+            Login to Opinions!
+        </div>
+    </div>
+    <form action="" method="post" class="ui large attached fluid segment form" novalidate>
+        {{ form.csrf_token }}
+
+        <!-- Email field and validation -->
+        {% if form.email.errors %}
+            <div class="error field required">
+                {{ form.email.label }}
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.email.label }}
+                {{ form.email }}
+            </div>
+        {% endif %}
+
+
+        <!-- Password field and validation -->
+        {% if form.password.errors %}
+            <div class="error field required">
+                {{ form.password.label }}
+                {{ form.password }}
+                <small>{{ form.password.description }}</small>
+                {% for error in form.password.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="field required">
+                {{ form.password.label }}
+                {{ form.password }}
+            </div>
+        {% endif %}
+
+        <div class="field">
+            <div class="ui checkbox">
+                {{ form.remember_me }}
+                {{ form.remember_me.label }}
+            </div>
+        </div>
+
+        <button class="ui fluid primary inverted button">Login</button>
+    </form>
+    <div class="ui bottom attached warning message">
+        <i class="icon help"></i>
+        Don't have an account? <a href="{{ url_for('users.register') }}">Sign Up!</a>
+    </div>
+{% endblock body %}
