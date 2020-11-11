@@ -24,7 +24,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(155), nullable=False, unique=True)
     full_name = db.Column(db.String(30), nullable=False)
     registered_on = db.Column(db.DateTime, default=func.now(), nullable=False)
-    profile_picture = db.Column(db.String(150), default="matthew.png")
+    profile_picture = db.Column(
+        db.String(150),
+        default="https://res.cloudinary.com/dybhjquqy/image/upload/v1605095190/opinions/matthew_bmswxp.png",
+    )
     confirmed_on = db.Column(db.DateTime, nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
     password = db.Column(db.String(190), nullable=False)

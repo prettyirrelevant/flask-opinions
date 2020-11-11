@@ -1,32 +1,26 @@
-{% extends 'base.html' %}
-{% block head %}
-<script src="{{ url_for('blog.static', filename='attachment.js') }}"></script>
-{% endblock %}
-{% block body %}
-    <form action="" method="post" class="ui segment raised form" enctype="multipart/form-data">
-        {{ form.csrf_token }}
+{% extends 'base.html' %} {% block head %} {% endblock %} {% block body %}
+<form
+  action=""
+  method="post"
+  class="ui segment raised form"
+  enctype="multipart/form-data"
+>
+  {{ form.csrf_token }}
 
-        <!-- tag for title -->
-        {% if form.title.errors %}
-            <div class="error field required">
-                {{ form.title.label }}
-                {{ form.title }}
-                {% for error in form.title.errors %}
-                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="field required">
-                {{ form.title.label }}
-                {{ form.title }}
-            </div>
-        {% endif %}
+  <!-- tag for title -->
+  {% if form.title.errors %}
+  <div class="error field required">
+    {{ form.title.label }} {{ form.title }} {% for error in form.title.errors %}
+    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="field required">{{ form.title.label }} {{ form.title }}</div>
+  {% endif %} {{ form.content(id='x') }}
+  <trix-editor input="x" class="trix-content"></trix-editor>
 
-        {{ form.content(id='x') }}
-        <trix-editor input="x" class="trix-content"></trix-editor>
-
-        <div style="margin-top: 30px">
-            <button class="ui button inverted green">Upload</button>
-        </div>
-    </form>
+  <div style="margin-top: 30px">
+    <button class="ui button inverted green">Upload</button>
+  </div>
+</form>
 {% endblock %}

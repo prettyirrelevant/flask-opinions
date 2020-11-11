@@ -1,62 +1,63 @@
-{% extends 'base.html' %}
-{% block body %}
-    <!-- headerrr -->
-    <h1 class="ui huge header">{{ post.title }}</h1>
-    <hr class="ui divider">
-    <h4 class="ui header" style="margin-top:5px">
-        <img src="{{ url_for('serve_profile', filename=post.user.profile_picture) }}" class="ui circular image">
-        <div class="content">
-            {{ post.user.full_name }}
-             <div class="sub header">Published on <strong>{{ post.timestamp.strftime("%b %d, %Y") }}</strong></div>
-        </div>
-    </h4>
-    <hr class="ui divider">
-
-    <!-- content -->
-    <div class="trix-content">
-        {{ post.content|safe }}
+{% extends 'base.html' %} {% block body %}
+<!-- headerrr -->
+<h1 class="ui huge header">{{ post.title }}</h1>
+<hr class="ui divider" />
+<h4 class="ui header" style="margin-top: 5px">
+  <img src="{{ post.user.profile_picture }}" class="ui circular image" />
+  <div class="content">
+    {{ post.user.full_name }}
+    <div class="sub header">
+      Published on <strong>{{ post.timestamp.strftime("%b %d, %Y") }}</strong>
     </div>
+  </div>
+</h4>
+<hr class="ui divider" />
 
-    <!-- comments -->
-    <h3 class="ui dividing header">Comment(s)</h3>
-    <div class="ui comments">
-        {% if post.comments %}
-            {% for comment in post.comments %}
-                <div class="comment">
-                    <div class="avatar">
-                        <img src="{{ url_for('serve_profile', filename=comment.user.profile_picture) }}">
-                    </div>
-                    <div class="content">
-                        <a class="author" href="{{ url_for('users.profile', username=comment.user.username) }}">{{ comment.user.full_name }}</a>
-                        <div class="metadata">
-                            <span class="date">{{ comment.timestamp.strftime("%d-%m-%Y at %I:%M %p") }}</span>
-                        </div>
-                        <div class="text">
-                            {{ comment.message }}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
+<!-- content -->
+<div class="trix-content">{{ post.content|safe }}</div>
 
-        <form action="" class="ui reply form" method="post" style="margin-bottom: 40px">
-            {{ form.csrf_token }}
-            {% if form.message.errors %}
-                <div class="error field">
-                    {{ form.message }}
-                    {% for error in form.title.errors %}
-                        <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="field">
-                    {{ form.message }}
-                    <p>{{ form.message.description }}</p>
-                </div>
-            {% endif %}
-            <button class="ui primary submit labeled icon button">
-                <i class="icon edit"></i> Add Comment
-            </button>
-        </form>
+<!-- comments -->
+<h3 class="ui dividing header">Comment(s)</h3>
+<div class="ui comments">
+  {% if post.comments %} {% for comment in post.comments %}
+  <div class="comment">
+    <div class="avatar">
+      <img src="{{ comment.user.profile_picture }}" />
     </div>
+    <div class="content">
+      <a
+        class="author"
+        href="{{ url_for('users.profile', username=comment.user.username) }}"
+        >{{ comment.user.full_name }}</a
+      >
+      <div class="metadata">
+        <span class="date"
+          >{{ comment.timestamp.strftime("%d-%m-%Y at %I:%M %p") }}</span
+        >
+      </div>
+      <div class="text">{{ comment.message }}</div>
+    </div>
+  </div>
+  {% endfor %} {% endif %}
+
+  <form action="" class="ui reply form" method="post" style="margin-bottom: 40px">
+    {{ form.csrf_token }} {% if form.message.errors %}
+    <div class="error field">
+      {{ form.message }} {% for error in form.title.errors %}
+      <div class="ui basic red pointing prompt label transition visible">
+        {{ error }}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="field">
+      {{ form.message }}
+      <p>{{ form.message.description }}</p>
+    </div>
+    {% endif %}
+    <button class="ui primary submit labeled icon button">
+      <i class="icon edit"></i> Add Comment
+    </button>
+  </form>
+</div>
 {% endblock %}

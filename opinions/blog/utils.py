@@ -5,6 +5,8 @@ import secrets
 from html.parser import HTMLParser
 from io import StringIO
 
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 from flask import current_app as app
 
 
@@ -46,10 +48,8 @@ def get_time_to_read(text: str):
 
 
 def save_photo(file):
-    random_name = secrets.token_hex(8)
-    _, ext = os.path.splitext(file.filename)
-    picture_name = random_name + ext
+    uploaded_picture = upload(file, folder="opinions")
 
-    file.save(os.path.join(app.config["UPLOADED_PHOTOS_DEST"], picture_name))
+    url, options = cloudinary_url(uploaded_picture["public_id"], format="jpg")
 
-    return picture_name
+    return url

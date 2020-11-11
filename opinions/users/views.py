@@ -241,9 +241,8 @@ def edit_profile():
         current_user.full_name = form.full_name.data
         db.session.commit()
 
-        # deletes previous profile picture
-        if previous_img != "matthew.png":
-            os.remove(os.path.join(app.config["UPLOADED_PROFILES_DEST"], previous_img))
+        # Figuring out how to delete previous profile pictures
+        # using cloudinary
 
         flash("Profile updated successfully!", "success")
         return redirect(url_for("users.profile", username=current_user.username))

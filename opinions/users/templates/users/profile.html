@@ -9,7 +9,7 @@
     <div class="ui raised segment">
         <div class="ui stackable center aligned grid">
             <div class="eight wide column">
-                <img src="{{ url_for('serve_profile', filename=user.profile_picture) }}" alt="Profile picture" class="ui image large circular">
+                <img src="{{user.profile_picture}}" alt="Profile picture" class="ui image large circular">
             </div>
             <div class="eight wide middle aligned column">
                 <h1 class="ui header">{{ user.full_name }}</h1>
