@@ -1,45 +1,82 @@
-{% extends 'base.html' %}
-{% block body %}
-    <div class="ui placeholder segment">
-        <div class="ui icon header">
-            <i class="exclamation circle icon"></i>
-                Just Pen Your Thoughts Down!
+{% extends 'base.html' %} {% block body %}
+<div class="ui placeholder segment">
+  <div class="ui icon header">
+    <i class="exclamation circle icon"></i>
+    Just Pen Your Thoughts Down!
+  </div>
+  <a class="ui fluid primary button" href="{{ url_for('blog.create_post') }}"
+    >Create Opinion</a
+  >
+</div>
+{% if posts %}
+<div class="ui divided items">
+  {% for post in posts %}
+  <div class="ui item">
+    <div class="content">
+      <p class="header">{{ post.title }}</p>
+      <div class="meta">
+        <img class="ui avatar image" src="{{ post.user.profile_picture }}" />
+        <a
+          class="author"
+          href="{{ url_for('users.profile', username=post.user.username) }}"
+          >{{ post.user.full_name }}</a
+        >&#183;
+        <i class="clock outline icon"></i>
+        {{ post.time_to_read }} read
+      </div>
+      <div class="extra">
+        <div class="ui label">{{ post.timestamp.strftime("%d %B, %Y") }}</div>
+        <div class="ui label">
+          <i class="comments outline icon"></i>{{ post.comments|length }}
         </div>
-        <a class="ui fluid primary button" href="{{ url_for('blog.create_post') }}">Create Opinion</a>
+        <a
+          class="ui right floated inverted primary button"
+          href="{{ url_for('blog.view_post', username=post.user.username, post_slug=post.slug) }}"
+        >
+          Open
+          <i class="right chevron icon"></i>
+        </a>
+      </div>
     </div>
-    {% if posts %}
-        <div class="ui divided items">
-            {% for post in posts %}
-                <div class="ui item">
-                    <div class="content">
-                        <p class="header">{{ post.title }}</p>
-                        <div class="meta">
-                            <img class="ui avatar image" src="{{ url_for('serve_profile', filename=post.user.profile_picture) }}">
-                            <a class="author" href="{{ url_for('users.profile', username=post.user.username) }}">{{ post.user.full_name }}</a>&#183;
-                            <i class="clock outline icon"></i>
-                            {{ post.time_to_read }} read
-                        </div>
-                        <div class="extra">
-                            <div class="ui label">{{ post.timestamp.strftime("%d %B, %Y") }}</div>
-                            <div class="ui label"><i class="comments outline icon"></i>{{ post.comments|length }}</div>
-                            <a class="ui right floated inverted primary button" href="{{ url_for('blog.view_post', username=post.user.username, post_slug=post.slug) }}">
-                                Open
-                                <i class="right chevron icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="ui pagination menu" style="margin-bottom: 40px">
-            <a {% if prev_url %} class="item" href="{{ prev_url }}" {% else %} class="disabled item" {% endif %}>
-                <i class="angle left icon"></i>
-                Newer Opinions
-            </a>
-            <a {% if next_url %} class="item" href="{{ next_url }}" {% else %} class="disabled item" {% endif %}>
-                Older Opinions
-                <i class="angle right icon"></i>
-            </a>
-        </div>
-    {% endif %}
-{% endblock body %}
+  </div>
+  {% endfor %}
+</div>
+<div class="ui pagination menu" style="margin-bottom: 40px">
+  <a
+    {%
+    if
+    prev_url
+    %}
+    class="item"
+    href="{{ prev_url }}"
+    {%
+    else
+    %}
+    class="disabled item"
+    {%
+    endif
+    %}
+  >
+    <i class="angle left icon"></i>
+    Newer Opinions
+  </a>
+  <a
+    {%
+    if
+    next_url
+    %}
+    class="item"
+    href="{{ next_url }}"
+    {%
+    else
+    %}
+    class="disabled item"
+    {%
+    endif
+    %}
+  >
+    Older Opinions
+    <i class="angle right icon"></i>
+  </a>
+</div>
+{% endif %} {% endblock body %}

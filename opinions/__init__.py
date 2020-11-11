@@ -30,7 +30,6 @@ def create_app(config=None):
     bcrypt.init_app(app)
 
     with app.app_context():
-        from . import routes
         from .blog import blog
         from .users import users
 

@@ -24,8 +24,13 @@ class Config(BaseConfig):
     MAIL_USE_SSL = True
     MAIL_USERNAME = environ.get("APP_MAIL_USERNAME")
     MAIL_PASSWORD = environ.get("APP_MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = environ.get("APP_MAIL_USERNAME")
     MAIL_DEBUG = False
 
-    SQLALCHEMY_DATABASE_URI = f"sqlite:////{os.getcwd()}/db.sqlite3"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = (
+        environ.get("SQLALCHEMY_DATABASE_URI") or f"sqlite:////{os.getcwd()}/db.sqlite3"
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = (
+        environ.get("SQLALCHEMY_TRACK_MODIFICATIONS") or False
+    )
     CLOUDINARY_URL = environ.get("CLOUDINARY_URL")

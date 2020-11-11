@@ -85,6 +85,5 @@ def view_post(username, post_slug):
 @blog.route("/upload_attachment", methods=["POST"])
 def upload_attachment():
     file = request.files["file"]
-    _ = save_photo(file)
-    file_url = url_for("serve_photo", filename=_, _external=True)
-    return jsonify({"url": file_url})
+    url = save_photo(file)
+    return jsonify({"url": url})

@@ -40,7 +40,9 @@ def register():
             full_name=form.full_name.data,
             email=form.email.data,
         )
-        user.password = bcrypt.generate_password_hash(form.password.data)
+        user.password = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf-8"
+        )
         try:
             db.session.add(user)
             db.session.commit()
