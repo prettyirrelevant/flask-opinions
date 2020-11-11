@@ -14,8 +14,8 @@ class BaseConfig:
 
 
 class Config(BaseConfig):
-    SECRET_KEY = environ.get("SECRET_KEY") or "!secret"
-    SECURITY_PASSWORD_SALT = environ.get("SECURITY_PASSWORD_SALT") or "salty"
+    SECRET_KEY = environ.get("SECRET_KEY")
+    SECURITY_PASSWORD_SALT = environ.get("SECURITY_PASSWORD_SALT")
 
     # Flask-Mail
     MAIL_SERVER = "smtp.googlemail.com"
@@ -27,10 +27,8 @@ class Config(BaseConfig):
     MAIL_DEFAULT_SENDER = environ.get("APP_MAIL_USERNAME")
     MAIL_DEBUG = False
 
-    SQLALCHEMY_DATABASE_URI = (
-        environ.get("SQLALCHEMY_DATABASE_URI") or f"sqlite:////{os.getcwd()}/db.sqlite3"
-    )
-    SQLALCHEMY_TRACK_MODIFICATIONS = (
-        environ.get("SQLALCHEMY_TRACK_MODIFICATIONS") or False
-    )
+    SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = environ.get("SQLALCHEMY_TRACK_MODIFICATIONS")
+
     CLOUDINARY_URL = environ.get("CLOUDINARY_URL")
+    LOG_TO_STDOUT = environ.get("LOG_TO_STDOUT")
